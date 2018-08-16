@@ -1,3 +1,8 @@
+html, body, .content {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 body{
 	overflow-y:hidden;
 }
@@ -13,18 +18,23 @@ ul{
     height: 25vh;
 }
 
-.titleDiv , .submitDiv{
+.titleDiv{
 	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .titleDiv p{
 	font-size:36px;
 }
 
-.questionsTextaera{
+.questionsTextDiv{
 	width: 50%;
 	height: 50vh;
 	margin: 0px auto;
+}
+
+.submitDiv{
+	margin-top: 20px;
 }
 
 @media (max-width: 992px) {
@@ -36,7 +46,7 @@ ul{
     	height:40px;
 	    display:inline-block;
     }
-    .questionsTextaera{
+    .questionsTextDiv{
 		width: 80%;
 	}
 }
