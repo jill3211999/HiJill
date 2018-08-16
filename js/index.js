@@ -6,7 +6,11 @@ var nowIndex = getNowIndex();
 function submit(){
 
 	console.log(nowIndex);
-
+	
+	firebase.database().ref().once('value').then(function(snapshot) {
+		nowIndex = Object.keys(snapshot.val()).length;
+	});
+	
 	if (nowIndex != undefined) {
 		firebase.database().ref().update({
 		    [nowIndex] : document.getElementById("questionTextarea").value
