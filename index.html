@@ -6,22 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen">
+  
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCPfgr9LdRH-sp5PxzsYge7DW1Knd1snf0",
+        authDomain: "introduction-questions.firebaseapp.com",
+        databaseURL: "https://introduction-questions.firebaseio.com",
+        projectId: "introduction-questions",
+        storageBucket: "introduction-questions.appspot.com",
+        messagingSenderId: "29760299695"
+      };
+      firebase.initializeApp(config);
+
+      // Get a reference to the database service
+      var database = firebase.database();
+    </script>
+    <script src="js/index.js"></script>
   </head>
+
   <body>
-  	<div>
-  	
-  	  <div class="menu col-md-2 col-sm-12">
-		  <ul>
-		      <li>Coffee</li>
-		      <li>Tea</li>
-		      <li>Milk</li>
-		      <li>Milk</li>
-		  </ul>
-	  </div>
-	  <div class="col-md-10 ">
-	  hi~
-      </div>
-		
-	</div>
+    <div class="titleDiv" align="center">
+      <p>行動問題集 - 自我介紹</p>
+    </div>
+    <div class="" style="" align="center">
+      <textarea id="questionTextarea" rows="6" cols="50">
+      </textarea>
+      
+    </div>
+    <div class="submitDiv" align="center">
+      <input type="button" class="btn btn-info" value="送出" onclick="submit()">
+    </div>
+  <!--   	  <div class="menu col-md-2 col-sm-12">
+  		  <ul>
+  		      <li>Coffee</li>
+  		      <li>Tea</li>
+  		      <li>Milk</li>
+  		      <li>Milk</li>
+  		  </ul>
+  	  </div>
+  	  <div class="col-md-10 ">
+  	  hi~
+        </div> -->
   </body>
 </html>
