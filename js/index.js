@@ -1,14 +1,7 @@
-var nowIndex = getNowIndex();
-	firebase.database().ref().once('value').then(function(snapshot) {
-		nowIndex = Object.keys(snapshot.val()).length;
-	});
-
 function submit(){
-
-	console.log(nowIndex);
 	
 	firebase.database().ref().once('value').then(function(snapshot) {
-		nowIndex = Object.keys(snapshot.val()).length;
+		var nowIndex = Object.keys(snapshot.val()).length;
 
 		if (nowIndex != undefined && document.getElementById("questionTextarea").value != "") {
 			firebase.database().ref().update({
@@ -19,7 +12,7 @@ function submit(){
 			      	alert("送出有問題，請重新送出");
 			    }else{
 			    	alert("成功～");
-			    	document.getElementById("questionTextarea").value = ""
+			    	document.getElementById("questionTextarea").value = "";
 			    }
 			});
 		}else{
@@ -28,11 +21,4 @@ function submit(){
 	});
 	
 
-}
-
-function getNowIndex(){
-	firebase.database().ref().once('value').then(function(snapshot) {
-	  // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-		return Object.keys(snapshot.val()).length;
-	});
 }
