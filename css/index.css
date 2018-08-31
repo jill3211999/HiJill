@@ -2,7 +2,7 @@ html, body, .content {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: rgb(220, 251, 255);
+  /*background-color: rgb(220, 251, 255);*/
 }
 body{
 	overflow-y:hidden;
