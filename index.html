@@ -1,62 +1,72 @@
+
+
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <title>行動科 - 自我介紹問題</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.min.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/index.css" media="screen">
-  
-    <!-- Firebase App is always required and must be first -->
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
-
-    <!-- Add additional services that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "",
-        authDomain: "introduction-questions.firebaseapp.com",
-        databaseURL: "https://introduction-questions.firebaseio.com",
-        projectId: "introduction-questions",
-        storageBucket: "introduction-questions.appspot.com",
-        messagingSenderId: "29760299695"
-      };
-      firebase.initializeApp(config);
-
-      // Get a reference to the database service
-      var database = firebase.database();
+<html>
+<head>
+    <title>Take or select photo(s)</title>
+    <script type="text/javascript">
+      function fileSelected() {
+        var count = document.getElementById('fileToUpload').files.length;
+              document.getElementById('details').innerHTML = "";
+              for (var index = 0; index < count; index ++)
+              {
+                     var file = document.getElementById('fileToUpload').files[index];
+                     var fileSize = 0;
+                     if (file.size > 1024 * 1024)
+                            fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+                     else
+                            fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+                     document.getElementById('details').innerHTML += 'Name: ' + file.name + '<br>Size: ' + fileSize + '<br>Type: ' + file.type;
+                     document.getElementById('details').innerHTML += '<p>';
+              }
+      }
+      function uploadFile() {
+        var fd = new FormData();
+              var count = document.getElementById('fileToUpload').files.length;
+              for (var index = 0; index < count; index ++)
+              {
+                     var file = document.getElementById('fileToUpload').files[index];
+                     fd.append('myFile', file);
+              }
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", uploadProgress, false);
+        xhr.addEventListener("load", uploadComplete, false);
+        xhr.addEventListener("error", uploadFailed, false);
+        xhr.addEventListener("abort", uploadCanceled, false);
+        xhr.open("POST", "savetofile.php");
+        xhr.send(fd);
+      }
+      function uploadProgress(evt) {
+        if (evt.lengthComputable) {
+          var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+          document.getElementById('progress').innerHTML = percentComplete.toString() + '%';
+        }
+        else {
+          document.getElementById('progress').innerHTML = 'Upload error!';
+        }
+      }
+      function uploadComplete(evt) {
+        alert(evt.target.responseText);
+      }
+      function uploadFailed(evt) {
+        alert("Error sendin file...");
+      }
+      function uploadCanceled(evt) {
+        alert("Upload cancelled by the user or network error!");
+      }
     </script>
-    <script src="js/index.js"></script>
-  </head>
-
-  <body>
-    <div class="content" style="position: relative;">
-      <div class="titleDiv" align="center">
-        <p>行動科 - 自我介紹問題</p>
-      </div>
-      <div class="questionsTextDiv" style="" align="center">
-        <textarea id="questionTextarea" style="width:100%;height:100%;"></textarea>
-      </div>
-      <div class="submitDiv" align="center">
-        <input type="button" class="btn btn-info" value="送出" style="width: 20%;z-index:1;" onclick="submit()">
-      </div>
-      <div class="" style="position: absolute; bottom: -10px;width: 100%;z-index:-1;">
-        <div style="background-image:url('image/grass.png');background-repeat:repeat-x;height:25vh;background-position: bottom;"></div>
-      </div>
+</head>
+<body>
+  <form id="form1" enctype="multipart/form-data" method="post" action="savetofile.php">
+    <div>
+      <label for="fileToUpload">Take or select photo(s)</label><br />
+      <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();" accept="image/*" />
     </div>
-  <!--   	  <div class="menu col-md-2 col-sm-12">
-  		  <ul>
-  		      <li>Coffee</li>
-  		      <li>Tea</li>
-  		      <li>Milk</li>
-  		      <li>Milk</li>
-  		  </ul>
-  	  </div>
-  	  <div class="col-md-10 ">
-  	  hi~
-        </div> -->
-  </body>
+    <div id="details"></div>
+    <div>
+      <input type="button" onclick="uploadFile()" value="Upload" />
+    </div>
+    <div id="progress"></div>
+  </form>
+</body>
 </html>
